@@ -26,15 +26,15 @@ services:
       - --check=false
       - --node-id=0
 
-      # INTERNAL listener for Docker containers
-      - --kafka-addr=PLAINTEXT://0.0.0.0:29092
-      - --advertise-kafka-addr=PLAINTEXT://redpanda:29092
+      # Host listener (used by macOS host apps like your producer)
+      - --kafka-addr=OUTSIDE://0.0.0.0:9092
+      - --advertise-kafka-addr=OUTSIDE://localhost:9092
 
-      # HOST listener for macOS (Python producer)
-      - --kafka-addr=PLAINTEXT_HOST://0.0.0.0:${KAFKA_BROKER_PORT}
-      - --advertise-kafka-addr=PLAINTEXT_HOST://localhost:${KAFKA_BROKER_PORT}
+      # Internal listener (used by containers: Schema Registry, Spark, kcat)
+      - --kafka-addr=INSIDE://0.0.0.0:29092
+      - --advertise-kafka-addr=INSIDE://redpanda:29092
 
-      # RPC
+      # RPC for internal communication
       - --rpc-addr=0.0.0.0:33145
       - --advertise-rpc-addr=redpanda:33145
 
@@ -42,11 +42,10 @@ services:
       REDPANDA_AUTO_CREATE_TOPICS: "true"
 
     ports:
-      - "${KAFKA_BROKER_PORT}:9092"     # HOST listener
-      - "29092:29092"                   # INTERNAL listener
-
+      - "9092:9092"     # host listener / outside
+      - "29092:29092"   # internal listener exposed for debugging
     healthcheck:
-      test: ["CMD-SHELL", "rpk cluster info --brokers=localhost:${KAFKA_BROKER_PORT} >/dev/null 2>&1 || exit 1"]
+      test: ["CMD-SHELL", "rpk cluster info --brokers=localhost:9092 >/dev/null 2>&1 || exit 1"]
       interval: 5s
       timeout: 3s
       retries: 20

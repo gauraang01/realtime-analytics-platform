@@ -26,4 +26,12 @@ make produce
 curl -s http://localhost:8081/subjects | jq
 
 
+# Ensure infra is up
+make up
+
+# 1) Create/ensure topic with desired config
+make topics
+
+# 2) Start async producer (Ctrl+C to stop)
+make produce-run
 

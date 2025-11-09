@@ -1,0 +1,8 @@
+topics:
+  - name: device_metrics_v1
+    partitions: 6
+    replication_factor: 1
+    retention_ms: 604800000   # 7 days
+    cleanup_policy: delete
+    min_insync_replicas: 1
+    segment_ms: 3600000
