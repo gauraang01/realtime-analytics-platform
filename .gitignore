@@ -1,0 +1,26 @@
+
+### `.gitignore`
+```gitignore
+# env
+.env
+*.env
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.uv/
+
+# docker
+**/.DS_Store
+infra/compose/.tmp/
+infra/compose/volumes/
+
+# tooling
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
