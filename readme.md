@@ -18,3 +18,12 @@ make ps
 make logs
 chmod +x ops/healthcheck.sh
 ./ops/healthcheck.sh
+
+uv venv
+make deps
+make produce
+
+curl -s http://localhost:8081/subjects | jq
+
+
+

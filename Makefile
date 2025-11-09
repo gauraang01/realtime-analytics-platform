@@ -20,3 +20,16 @@ ps:
 clean:
 	@$(COMPOSE) down -v --remove-orphans
 	@docker volume prune -f || true
+
+
+
+.PHONY: deps test produce
+
+deps:
+	uv pip install -r apps/contracts/requirements.txt
+
+test:
+	PYTHONPATH=apps/contracts uv run -m pytest -q
+
+produce:
+	PYTHONPATH=apps/contracts uv run python -m rtap_contracts.register_and_probe

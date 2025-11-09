@@ -1,0 +1,53 @@
+{
+  "type": "record",
+  "name": "DeviceMetric",
+  "namespace": "com.rtap.telemetry",
+  "doc": "High-velocity device telemetry metric (v1).",
+  "fields": [
+    {
+      "name": "event_time",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-micros"
+      },
+      "doc": "Event time as microseconds since epoch (UTC)."
+    },
+    {
+      "name": "device_id",
+      "type": "string",
+      "doc": "Unique device identifier."
+    },
+    {
+      "name": "metric",
+      "type": {
+        "type": "enum",
+        "name": "MetricName",
+        "symbols": ["cpu_util", "mem_util", "latency_ms", "errors"],
+        "doc": "Metric name. Extend in later versions via new symbols."
+      }
+    },
+    {
+      "name": "value",
+      "type": "double",
+      "doc": "Observed numeric value."
+    },
+    {
+      "name": "tags",
+      "type": ["null", {"type": "map", "values": "string"}],
+      "default": null,
+      "doc": "Optional labels (region, az, app, etc.)."
+    },
+    {
+      "name": "trace_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Optional trace correlation id."
+    },
+    {
+      "name": "ingest_ts",
+      "type": ["null", {"type": "long", "logicalType": "timestamp-micros"}],
+      "default": null,
+      "doc": "Producer-ingest timestamp (UTC micros)."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://rtap/schemas/device_metric.v1.json",
+    "title": "DeviceMetric v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["event_time", "device_id", "metric", "value"],
+    "properties": {
+      "event_time": {
+        "type": "integer",
+        "description": "UTC micros since epoch",
+        "minimum": 0
+      },
+      "device_id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "metric": {
+        "type": "string",
+        "enum": ["cpu_util", "mem_util", "latency_ms", "errors"]
+      },
+      "value": {
+        "type": "number"
+      },
+      "tags": {
+        "type": "object",
+        "additionalProperties": { "type": "string" }
+      },
+      "trace_id": {
+        "type": "string"
+      },
+      "ingest_ts": {
+        "type": "integer",
+        "minimum": 0
+      }
+    }
+  }
+  
